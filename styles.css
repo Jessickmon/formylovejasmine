@@ -1,0 +1,117 @@
+/* Import the Montserrat font */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@900&display=swap');
+
+/* General body styles */
+body {
+    font-family: 'Montserrat', sans-serif;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+    background: ivory; /* Updated to match the example */
+}
+
+/* Start Page Container */
+.start-page {
+    position: relative;
+    height: 100vh;
+    width: 100%;
+    overflow: hidden;
+}
+
+/* Clouds Container */
+.clouds-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh; /* Ensure it fills the viewport height */
+    z-index: 1; /* Background layer */
+    pointer-events: none; /* Allow text to remain interactive */
+    overflow: hidden; /* Prevent overflowing content */
+}
+
+#svg {
+    width: 100%;
+    height: 100%; /* Fill the container */
+    object-fit: cover; /* Adjust the SVG to cover the container */
+    preserveAspectRatio: xMinYMin slice; /* Maintain aspect ratio */
+}
+
+
+/* Text Container Styles */
+.text-container {
+    position: relative;
+    z-index: 2; /* Foreground layer */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    text-align: center;
+    color: black;
+}
+
+/* Text Styles */
+.text {
+    font-size: 7em; /* Default size */
+    line-height: 1; /* Maintain consistent spacing */
+    color: black;
+    margin: 0; /* Remove default margins */
+    white-space: nowrap; /* Prevent text from breaking into multiple lines */
+    font-stretch: expanded; /* Expands the width of characters if the font supports it */
+    letter-spacing: 0.1em; /* Adds spacing between letters */
+    font-weight: 900; /* Ensures the characters are bold and thick */
+}
+
+.text0, .text2 {
+    color: black;
+    -webkit-text-fill-color: white; /* Override color for inner text */
+    -webkit-text-stroke-width: 1px;
+    -webkit-text-stroke-color: black;
+    font-stretch: extra-expanded; /* Extra-wide characters for specific lines */
+}
+
+.text1, .text3 {
+    color: black;
+    -webkit-text-fill-color: white; /* Red inner fill for contrast */
+    -webkit-text-stroke-width: 1px;
+    -webkit-text-stroke-color: black;
+    letter-spacing: 0.15em; /* Increase letter spacing more for contrast */
+}
+
+/* New Section for Navigation and Dummy Content */
+#dummy {
+    position: relative;
+    height: 100vh;
+    width: 100%;
+}
+
+#back {
+    position: relative;
+    padding-top: 50%;
+    text-align: center;
+    font-size: 1.5em;
+    cursor: pointer;
+}
+
+/* Responsive Design */
+@media only screen and (max-width: 600px) {
+    #back {
+        cursor: none;
+        font-size: 0.8em;
+    }
+
+    .text {
+        font-size: 2.25em; /* Adjust text size for small screens */
+    }
+}
+
+/* New Section Styles */
+.new-section {
+    background: linear-gradient(to bottom, #ff7e5f, #feb47b);
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+}
