@@ -34,7 +34,6 @@ body {
     width: 100%;
     height: 100%; /* Fill the container */
     object-fit: cover; /* Adjust the SVG to cover the container */
-    preserveAspectRatio: xMinYMin slice; /* Maintain aspect ratio */
 }
 
 
@@ -108,10 +107,229 @@ body {
 
 /* New Section Styles */
 .new-section {
-    background: linear-gradient(to bottom, #ff7e5f, #feb47b);
+    background: white;
     height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
     color: white;
 }
+
+header {
+    align-items: center;
+    background-color: #151e22; /* Dark blue background */
+    display: flex;
+    justify-content: space-between; /* Space between logo and tabs */
+    left: 0;
+    position: sticky; /* Sticky navigation */
+    top: 0;
+    width: 100%; /* Full width */
+    z-index: 999; /* Keeps it above other elements */
+    padding: 1em; /* Adds padding */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Optional shadow */
+    transition: 0.6s; /* Smooth transitions */
+}
+
+header ul {
+    list-style: none;
+    display: flex;
+    justify-content: flex-end; /* Right-align the tabs */
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    gap: 20px; /* Add space between tabs */
+}
+
+header ul li {
+    list-style: none;
+    padding-right: 4vw; /* Add right padding to each tab */
+}
+
+header ul li a {
+    text-decoration: none;
+    color: white; /* Text color for tabs */
+    font-weight: bold;
+    padding: 0.5em 1em; /* Inner padding for the links */
+    transition: 0.3s ease;
+    border-radius: 5px; /* Rounded edges for tabs */
+    display: block; /* Ensure the padding applies to the entire clickable area */
+}
+
+header ul li a:hover {
+    background-color: rgba(255, 255, 255, 0.8); /* Light hover effect */
+    color: #151e22; /* Darker blue on hover */
+    transition: all 0.3s ease;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+
+.contact-button {
+    background-color: #007BFF; /* Slightly darker blue for the button */
+    border: none;
+    border-radius: 25px;
+    color: #ffffff;
+    cursor: pointer;
+    font-size: 1em;
+    font-weight: bold;
+    padding: 0.5em 1.5em;
+    text-decoration: none;
+    transition: 0.6s;
+}
+
+.contact-button:hover {
+    background-color: rgba(110, 219, 110, 0.4);
+    transition: all 0.3s ease;
+}
+
+/* Timeline Section */
+
+/* Variables */
+:root {
+    --font-sans: 'Open Sans', sans-serif;
+    --black: #151e22; /* Updated to match the nav bar */
+    --white: #ffffff;
+}
+
+/* Main Section Styling */
+main {
+    min-width: 300px;
+    max-width: 500px;
+    margin: auto;
+    background-color: var(--white); /* White background */
+    padding: 20px; /* Optional padding for a clean layout */
+    border-radius: 10px; /* Rounded corners for the timeline box */
+}
+
+p {
+    font-size: 1em;
+    line-height: 1.75em;
+    border-top: 3px solid;
+    border-color: var(--black); /* Line color matches the nav bar */
+    border-width: 3px;
+    margin: 0;
+    padding: 40px;
+    counter-increment: section;
+    position: relative;
+    color: var(--black);
+}
+
+/* Numbers on Each Paragraph */
+p:before {
+    content: counter(section);
+    position: absolute;
+    border-radius: 50%;
+    padding: 10px;
+    height: 1.25em;
+    width: 1.25em;
+    background-color: var(--black); /* Matches nav bar */
+    text-align: center;
+    line-height: 1.25em;
+    color: var(--white); /* White text on dark background */
+    font-size: 1em;
+}
+
+/* Odd-numbered Paragraph Borders */
+p:nth-child(odd) {
+    border-right: 3px solid;
+    padding-left: 0;
+}
+
+p:nth-child(odd):before {
+    left: 100%; 
+    margin-left: -20px;
+}
+
+/* Even-numbered Paragraph Borders */
+p:nth-child(even) {
+    border-left: 3px solid;
+    padding-right: 0;
+}
+
+p:nth-child(even):before {
+    right: 100%; 
+    margin-right: -20px;
+}
+
+/* First and Last Paragraphs */
+p:first-child {
+    border-top: 0;
+    border-top-right-radius: 0;
+    border-top-left-radius: 0;
+}
+
+p:last-child {
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+/* Timeline Section */
+#timeline {
+    background-color: white; /* Ensure the background of the entire section is white */
+    padding: 2em 0; /* Add padding to the top and bottom for spacing */
+    margin: 0; /* Remove any potential margin */
+}
+
+#timeline h2 {
+    color: #34435E; /* Title color */
+    margin-top: 1em; /* Space above the title */
+    text-align: center;
+    font-size: 1.8em; /* Adjust font size */
+}
+
+#timeline main {
+    min-width: 10%;
+    max-width: 45%;
+    margin: auto;
+    background-color: white; /* Keeps the main area white */
+    padding: 20px; /* Adds padding inside the main area */
+    border-radius: 10px; /* Rounded corners for the timeline box */
+}
+
+/* Games Section */
+#games {
+    position: relative; /* Ensures child elements like #runner are positioned relative to this section */
+    height: 100vh; /* Make the section fill the viewport height */
+    background-color: white; /* Match the background with other sections */
+    padding: 2em 0;
+    text-align: center;
+    overflow: hidden; /* Prevents runner from moving off-screen */
+}
+
+
+#games h2 {
+    color: #34435E; /* Title color */
+    margin-top: 1em; /* Space above the title */
+    text-align: center;
+    font-size: 1.8em; /* Adjust font size */
+}
+
+#games main {
+    min-width: 10%; /* Match the timeline main section width */
+    max-width: 45%; /* Match the timeline main section width */
+    margin: auto;
+    background-color: white; /* Keeps the main area white */
+    padding: 20px; /* Adds padding inside the main area */
+    border-radius: 10px; /* Rounded corners for the timeline box */
+}
+
+#runner {
+    position: absolute; /* Allows the button to move freely within #games */
+    width: 150px;
+    height: 50px;
+    background-color: #93D4F7;
+    color: white;
+    font-size: 16px;
+    text-align: center;
+    line-height: 50px;
+    border-radius: 10px;
+    cursor: pointer;
+    top: 50%; /* Centers vertically within #games */
+    left: 50%; /* Centers horizontally within #games */
+    transform: translate(-50%, -50%); /* Adjusts position to be perfectly centered */
+    transition: all 0.3s ease; /* Smooth transition for movements */
+}
+
+

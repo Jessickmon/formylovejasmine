@@ -172,23 +172,182 @@ function random(min, max, float = false) {
     cloud12.resume();
   }
   
-  function debugAnimation() {
-    //
-    cloud1.resume();
-    //
-    cloud5.resume();
-    cloud10.resume();
-    //
-    cloud3.resume();
-    cloud4.resume();
-    cloud7.resume();
-    //
-    cloud6.resume();
-    cloud8.resume();
-    cloud9.resume();
-  
-  }
-  
   startAnimation();
-  // debugAnimation();
-  
+
+
+  // Add sticky class when scrolling
+  window.onscroll = function() { handleStickyNavbar() };
+
+  const navbar = document.getElementById("navbar");
+  const sticky = navbar.offsetTop;
+
+  function handleStickyNavbar() {
+    if (window.pageYOffset >= sticky) {
+      navbar.classList.add("sticky"); // Adds sticky class
+    } else {
+      navbar.classList.remove("sticky"); // Removes sticky class
+    }
+  }
+
+  // Fade-in and fade-out animation for images
+  gsap.utils.toArray('.fade-in').forEach((image) => {
+    gsap.fromTo(image, 
+      { opacity: 0, scale: 0.9 }, // Starting state
+      { 
+        opacity: 1, 
+        scale: 1, 
+        duration: 1, 
+        ease: 'power2.out',
+        scrollTrigger: {
+          trigger: image,
+          start: 'top 80%', // Start animation when the image is near the viewport
+          end: 'top 20%', // End point for the animation
+          scrub: true, // Smooth transition as you scroll
+          toggleActions: 'play reverse play reverse', // Play forward on scroll down, reverse on scroll up
+        }
+      }
+    );
+  });
+
+  $(document).ready(function() {
+    const runner = $("#runner");
+    const gamesSection = $("#games");
+
+    // Initialize runner position to center of the parent
+    function initializeRunnerPosition() {
+        runner.css({
+            left: "50%",
+            top: "50%",
+            transform: "translate(-50%, -50%)"
+        });
+    }
+
+    initializeRunnerPosition();
+
+    // Reinitialize position on window resize to maintain centering
+    $(window).resize(function() {
+        initializeRunnerPosition();
+    });
+
+    // Debounce function to limit the rate of function execution
+    function debounce(func, wait) {
+        let timeout;
+        return function(...args) {
+            clearTimeout(timeout);
+            timeout = setTimeout(() => func.apply(this, args), wait);
+        };
+    }
+  });
+
+  $(document).ready(function() {
+    const runner = $("#runner");
+    const gamesSection = $("#games");
+
+    // Initialize runner position to center of the parent
+    function initializeRunnerPosition() {
+        runner.css({
+            left: "50%",
+            top: "50%",
+            transform: "translate(-50%, -50%)"
+        });
+    }
+
+    initializeRunnerPosition();
+
+    // Reinitialize position on window resize to maintain centering
+    $(window).resize(function() {
+        initializeRunnerPosition();
+    });
+
+    // Debounce function to limit the rate of function execution
+    function debounce(func, wait) {
+        let timeout;
+        return function(...args) {
+            clearTimeout(timeout);
+            timeout = setTimeout(() => func.apply(this, args), wait);
+        };
+    }
+
+    // Variable to track if the runner has moved
+    let hasMoved = false;
+
+    // Mousemove handler with debounce
+    $(document).on("mousemove", debounce(function (e) {
+        const moveThreshold = 150; // Sensitivity threshold in pixels
+        const moveFactor = 100; // How far the runner moves
+
+        // Get games section offset and dimensions
+        const gamesOffset = gamesSection.offset();
+        const gamesWidth = gamesSection.width();
+        const gamesHeight = gamesSection.height();
+
+        // Define movement area as a percentage of games section
+        const movementAreaPercentage = 0.6; // 60% of width and height
+        const movementWidth = gamesWidth * movementAreaPercentage;
+        const movementHeight = gamesHeight * movementAreaPercentage;
+
+        // Calculate min and max positions to center the movement area
+        const minLeft = (gamesWidth - movementWidth) / 2 + runner.outerWidth() / 2;
+        const maxLeft = (gamesWidth + movementWidth) / 2 - runner.outerWidth() / 2;
+
+        const minTop = (gamesHeight - movementHeight) / 2 + runner.outerHeight() / 2;
+        const maxTop = (gamesHeight + movementHeight) / 2 - runner.outerHeight() / 2;
+
+        // Mouse position relative to games section
+        const mouseX = e.pageX - gamesOffset.left;
+        const mouseY = e.pageY - gamesOffset.top;
+
+        // Runner position relative to games section
+        const runnerPos = runner.position(); // { top, left }
+        const runnerWidth = runner.outerWidth();
+        const runnerHeight = runner.outerHeight();
+
+        // Runner's center position
+        const runnerCenterX = runnerPos.left + runnerWidth / 2;
+        const runnerCenterY = runnerPos.top + runnerHeight / 2;
+
+        // Calculate distance between mouse and runner center
+        const distanceX = runnerCenterX - mouseX;
+        const distanceY = runnerCenterY - mouseY;
+        const distance = Math.sqrt(distanceX * distanceX + distanceY * distanceY);
+
+        if (distance < moveThreshold) {
+            hasMoved = true;
+
+            // Calculate angle away from cursor
+            const angle = Math.atan2(distanceY, distanceX);
+
+            // Calculate movement vector
+            const deltaX = Math.cos(angle) * moveFactor;
+            const deltaY = Math.sin(angle) * moveFactor;
+
+            // New position
+            let newLeft = runnerPos.left + deltaX;
+            let newTop = runnerPos.top + deltaY;
+
+            // Ensure runner stays within the defined movement area
+            newLeft = Math.max(minLeft, Math.min(newLeft, maxLeft));
+            newTop = Math.max(minTop, Math.min(newTop, maxTop));
+
+            // Apply the new position with GSAP for smooth animation
+            gsap.to(runner, {
+                duration: 0.3,
+                left: newLeft,
+                top: newTop,
+                ease: "power2.out"
+            });
+        } else if (hasMoved) {
+            // If the runner has moved and the cursor is no longer within the threshold, reset to center
+            gsap.to(runner, {
+                duration: 0.5,
+                left: "50%",
+                top: "50%",
+                transform: "translate(-50%, -50%)",
+                ease: "power2.out",
+                onComplete: () => { hasMoved = false; }
+            });
+        }
+    }, 10)); // Adjust the debounce delay as needed
+});
+
+
